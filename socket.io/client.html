@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>socket.io test</title>
+</head>
+<body>
+<script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script>
+  console.log("Starting.");
+  var socket = io.connect("http://hercules:8888");
+  console.log(socket);
+  socket.on('news',function(data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data'});
+  });
+</script>
+</body>
+</html>
