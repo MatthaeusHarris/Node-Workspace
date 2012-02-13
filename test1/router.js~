@@ -22,12 +22,13 @@ function route(handle, pathname, response) {
 	      response.end();
 	    } else {
 	      console.log("File found.  Serving " + pathname);
-	      response.writeHead(200, {"Content-Type":"text/plain"});
+	      response.writeHead(200, {"Content-Type":"text/html"});
 	      response.write(data);
 	      response.end();
 	    }
 	  });
 	} else {
+	  console.log("Provided path does not match resovled path.");
 	  response.writeHead(403, {"Content-Type":"text/plain"});
 	  response.write("403 Forbidden");
 	  response.end();

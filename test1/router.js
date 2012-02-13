@@ -6,36 +6,40 @@ function route(handle, pathname, response) {
     handle[pathname](response);
   } else {
     console.log("No request handler found for " + pathname);
-    fs.realpath(process.cwd() + pathname, function(err, resolvedPath) {
-      if (err) {
-	console.log(err);
-	response.writeHead(404, {"Content-Type":"text/plain"});
-	response.write("404 Not found");
-	response.end();
-      } else {
-	if (resolvedPath === (process.cwd() + pathname)) {
-	  fs.readFile(process.cwd() + pathname, function (err, data) {
-	    if (err) {
-	      console.log(err);
-	      response.writeHead(404, {"Content-Type":"text/plain"});
-	      response.write("404 Not found");
-	      response.end();
-	    } else {
-	      console.log("File found.  Serving " + pathname);
-	      response.writeHead(200, {"Content-Type":"text/plain"});
-	      response.write(data);
-	      response.end();
-	    }
-	  });
-	} else {
-	  console.log("Provided path does not match resovled path.");
-	  response.writeHead(403, {"Content-Type":"text/plain"});
-	  response.write("403 Forbidden");
-	  response.end();
-	}
-      }
-    });
+    serveFile(pathname, response);
   }
+}
+
+function serveFile(pathname, response) {
+  fs.realpath(process.cwd() + pathname, function(err, resolvedPath) {
+    if (err) {
+      console.log(err);
+      response.writeHead(404, {"Content-Type":"text/plain"});
+      response.write("404 Not found");
+      response.end();
+    } else {
+      if (resolvedPath === (process.cwd() + pathname)) {
+	fs.readFile(process.cwd() + pathname, function (err, data) {
+	  if (err) {
+	    console.log(err);
+	    response.writeHead(404, {"Content-Type":"text/plain"});
+	    response.write("404 Not found");
+	    response.end();
+	  } else {
+	    console.log("File found.  Serving " + pathname);
+	    response.writeHead(200, {"Content-Type":"text/html"});
+	    response.write(data);
+	    response.end();
+	  }
+	});
+      } else {
+	console.log("Provided path does not match resovled path.");
+	response.writeHead(403, {"Content-Type":"text/plain"});
+	response.write("403 Forbidden");
+	response.end();
+      }
+    }
+  });
 }
 
 exports.route = route;
