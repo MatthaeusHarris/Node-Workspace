@@ -1,6 +1,6 @@
 var exec = require("child_process").exec;
 
-function start(response) {
+function start(response, postData) {
   console.log("Request handler 'start' was called.");
   
   exec("ls -lah", function (error, stdout, stderr) {
@@ -10,14 +10,14 @@ function start(response) {
   });
 }
 
-function upload(response) {
+function upload(response, postData) {
   console.log("Request handler 'upload' was called."); 
   response.writeHead(200, {"Content-Type":"text/plain"});
-  response.write("Hello upload");
+  response.write("You've sent: " + postData);
   response.end();
 }
 
-function index(response) {
+function index(response, postData) {
   console.log("Index requested.");
   response.writeHead(200, {"Content-Type":"text/plain"});
   response.write("Blarg.");

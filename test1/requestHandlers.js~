@@ -26,3 +26,4 @@ function index(response) {
 
 exports.start = start;
 exports.upload = upload;
+exports.index = index;

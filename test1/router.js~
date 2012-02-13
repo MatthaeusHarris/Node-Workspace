@@ -27,7 +27,7 @@ function serveFile(pathname, response) {
 	    response.end();
 	  } else {
 	    console.log("File found.  Serving " + pathname);
-	    response.writeHead(200, {"Content-Type":"text/html"});
+	    response.writeHead(200, {"Content-Type":getMimeType(pathname)});
 	    response.write(data);
 	    response.end();
 	  }
