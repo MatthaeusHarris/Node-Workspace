@@ -17,5 +17,13 @@ function upload(response) {
   response.end();
 }
 
+function index(response) {
+  console.log("Index requested.");
+  response.writeHead(200, {"Content-Type":"text/plain"});
+  response.write("Blarg.");
+  response.end();
+}
+
 exports.start = start;
 exports.upload = upload;
+exports.index = index;
